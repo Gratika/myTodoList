@@ -15,7 +15,7 @@ class TodoItems extends Migration
     {
         Schema::create('todo_items', function (Blueprint $table) {
             $table->id();
-            $table->string('item_text');
+            $table->string('item_text')->default('новая задача');
             $table->integer('is_completed')->default(0);
             $table->integer('is_deleted')->default(0);
             $table->timestamps();

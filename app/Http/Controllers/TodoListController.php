@@ -35,7 +35,8 @@ class TodoListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       TodoItem::create($request->all());
+       return TodoItem::all();
     }
 
     /**
@@ -46,7 +47,7 @@ class TodoListController extends Controller
      */
     public function show($id)
     {
-        //
+       // return TodoItem::findOrFail($id);
     }
 
     /**
@@ -57,7 +58,7 @@ class TodoListController extends Controller
      */
     public function edit($id)
     {
-        //
+        //$data = TodoItem::
     }
 
     /**

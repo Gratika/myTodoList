@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TodoList from "./TodoList";
+import '../../css/todoListStyle.css'
 
 function Application() {
     return (
-        <div className="container">
+        <div className="App">
 <TodoList/>
         </div>
     );
