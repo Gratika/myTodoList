@@ -46,9 +46,38 @@ function TodoList(){
             .catch(err=>console.log(err));
     }
     //удаление задачи
-    const removeTask = ()=>{}
+    const removeTask = (id)=>{
+       console.log(id);
+        fetch('http://127.0.0.1:8000/todolist/'+id,{
+            "method":"DELETE",
+            "headers":{
+                'X-CSRF-TOKEN': token
+            }
+        })
+            .then(response=>response.json())
+            .then(res => {
+                setTodos(res);
+            })
+            .catch(err=>console.log(err));
+    }
     //изменение состояния выполнено или нет
-    const setCompleted=()=>{}
+    const setCompleted=(todo)=>{
+       console.log('setCompleted');
+        fetch('http://127.0.0.1:8000/todolist/'+todo.id,{
+            "method":"Put",
+            "headers":{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json; charset=UTF-8',
+                'X-CSRF-TOKEN': token
+            },
+            "body":JSON.stringify(todoItem)
+        })
+            .then(response=>response.json())
+            .then(res => {
+                setTodos(res);
+            })
+            .catch(err=>console.log(err));
+    }
     React.useEffect(()=>{
        getTodo();
     },[])

@@ -70,7 +70,13 @@ class TodoListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $todo =TodoItem::find($id);
+        $todo->item_text=$request->input('item_text');
+        $todo->is_completed=$request->input('is_completed');
+        $todo->is_deleted=$request->input('is_deleted');
+        $todo->save();
+
+        return TodoItem::all();
     }
 
     /**
@@ -81,6 +87,9 @@ class TodoListController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $todo =TodoItem::find($id);
+        $todo ->delete();
+        return TodoItem::all();
+
     }
 }

@@ -22,7 +22,11 @@ Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
 
-Route::resource('todolist', \App\Http\Controllers\TodoListController::class);
+Route::resource('/todolist', \App\Http\Controllers\TodoListController::class);
+Route::delete('/todolist/{id}',[\App\Http\Controllers\TodoListController::class,'destroy'])->
+name('todolist.destroy');
+Route::put('/todolist/{id}',[\App\Http\Controllers\TodoListController::class,'update'])->
+name('todolist.update');
 
 Auth::routes();
 

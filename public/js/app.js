@@ -2258,10 +2258,16 @@ function TodoItem(_ref) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     className: "item-todo",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      className: todo.is_completed ? "item-text-strike" : "item-text",
+      className: todo.is_completed ? "item-text strike" : "item-text",
+      onClick: function onClick() {
+        return setCompleted(todo);
+      },
       children: todo.item_text
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
       className: "item-delete",
+      onClick: function onClick() {
+        return removeTask(todo.id);
+      },
       children: "x"
     })]
   }, todo.id);
@@ -2358,10 +2364,41 @@ function TodoList() {
   }; //удаление задачи
 
 
-  var removeTask = function removeTask() {}; //изменение состояния выполнено или нет
+  var removeTask = function removeTask(id) {
+    console.log(id);
+    fetch('http://127.0.0.1:8000/todolist/' + id, {
+      "method": "DELETE",
+      "headers": {
+        'X-CSRF-TOKEN': token
+      }
+    }).then(function (response) {
+      return response.json();
+    }).then(function (res) {
+      setTodos(res);
+    })["catch"](function (err) {
+      return console.log(err);
+    });
+  }; //изменение состояния выполнено или нет
 
 
-  var setCompleted = function setCompleted() {};
+  var setCompleted = function setCompleted(todo) {
+    console.log('setCompleted');
+    fetch('http://127.0.0.1:8000/todolist/' + todo.id, {
+      "method": "Put",
+      "headers": {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'X-CSRF-TOKEN': token
+      },
+      "body": JSON.stringify(todoItem)
+    }).then(function (response) {
+      return response.json();
+    }).then(function (res) {
+      setTodos(res);
+    })["catch"](function (err) {
+      return console.log(err);
+    });
+  };
 
   react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
     getTodo();
